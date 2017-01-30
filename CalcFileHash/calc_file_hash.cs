@@ -11,7 +11,7 @@ namespace CalcFileHash
 {
   public partial class calc_file_hash_form : Form
   {
-    SynchronizationContext sync_context;
+    private SynchronizationContext sync_context;
 
     public calc_file_hash_form()
     {
@@ -54,13 +54,31 @@ namespace CalcFileHash
     private void start_hash_task()
     {
       string file_path = file_path_textbox.Text.Trim();
-      if (file_path == "") {
+      if (!try_open_file(file_path)) {
         return;
       }
 
       set_start_hash_ui();
       string hash_type = hash_type_cmb.Text.Trim();
       Task.Factory.StartNew(() => { calc_hash_task(file_path, hash_type); });
+    }
+
+    private bool try_open_file(string file_path)
+    {
+      performance_textbox.Text = "";
+      if (file_path == "") {
+        return false;
+      }
+
+      try {
+        FileStream file = new FileStream(file_path, FileMode.Open);
+        file.Close();
+      } catch (Exception e) {
+        performance_textbox.Text = e.Message;
+        return false;
+      }
+
+      return true;
     }
 
     private void set_start_hash_ui()
@@ -107,8 +125,7 @@ namespace CalcFileHash
         double elaps = calc_hash(file_path, hash_type);
         calc_performance(file_path, elaps);
       } catch (Exception e) {
-        sync_context.Send(ui_task_set_performance, "");
-        MessageBox.Show(e.Message, "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+        sync_context.Send(ui_task_set_performance, e.Message);
       } finally {
         sync_context.Send(ui_task_end_hash, null);
       }
