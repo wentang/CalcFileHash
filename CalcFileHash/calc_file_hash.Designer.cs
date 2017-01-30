@@ -34,6 +34,11 @@
       this.actual_hash_textbox = new System.Windows.Forms.TextBox();
       this.expect_hash_textbox = new System.Windows.Forms.TextBox();
       this.hash_type_cmb = new System.Windows.Forms.ComboBox();
+      this.hash_groupbox = new System.Windows.Forms.GroupBox();
+      this.pref_groupbox = new System.Windows.Forms.GroupBox();
+      this.performance_textbox = new System.Windows.Forms.TextBox();
+      this.hash_groupbox.SuspendLayout();
+      this.pref_groupbox.SuspendLayout();
       this.SuspendLayout();
       // 
       // browse_button
@@ -51,7 +56,7 @@
       // 
       this.actual_label.AutoSize = true;
       this.actual_label.Font = new System.Drawing.Font("新宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.actual_label.Location = new System.Drawing.Point(12, 53);
+      this.actual_label.Location = new System.Drawing.Point(14, 25);
       this.actual_label.Name = "actual_label";
       this.actual_label.Size = new System.Drawing.Size(47, 12);
       this.actual_label.TabIndex = 3;
@@ -61,7 +66,7 @@
       // 
       this.expect_label.AutoSize = true;
       this.expect_label.Font = new System.Drawing.Font("新宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.expect_label.Location = new System.Drawing.Point(12, 82);
+      this.expect_label.Location = new System.Drawing.Point(14, 54);
       this.expect_label.Name = "expect_label";
       this.expect_label.Size = new System.Drawing.Size(47, 12);
       this.expect_label.TabIndex = 5;
@@ -79,19 +84,19 @@
       // actual_hash_textbox
       // 
       this.actual_hash_textbox.Font = new System.Drawing.Font("新宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.actual_hash_textbox.Location = new System.Drawing.Point(65, 50);
+      this.actual_hash_textbox.Location = new System.Drawing.Point(67, 22);
       this.actual_hash_textbox.Name = "actual_hash_textbox";
       this.actual_hash_textbox.ReadOnly = true;
-      this.actual_hash_textbox.Size = new System.Drawing.Size(487, 21);
+      this.actual_hash_textbox.Size = new System.Drawing.Size(457, 21);
       this.actual_hash_textbox.TabIndex = 4;
       this.actual_hash_textbox.TextChanged += new System.EventHandler(this.actual_hash_textbox_TextChanged);
       // 
       // expect_hash_textbox
       // 
       this.expect_hash_textbox.Font = new System.Drawing.Font("新宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-      this.expect_hash_textbox.Location = new System.Drawing.Point(65, 78);
+      this.expect_hash_textbox.Location = new System.Drawing.Point(67, 50);
       this.expect_hash_textbox.Name = "expect_hash_textbox";
-      this.expect_hash_textbox.Size = new System.Drawing.Size(487, 21);
+      this.expect_hash_textbox.Size = new System.Drawing.Size(457, 21);
       this.expect_hash_textbox.TabIndex = 6;
       this.expect_hash_textbox.TextChanged += new System.EventHandler(this.expect_hash_textbox_TextChanged);
       // 
@@ -111,17 +116,49 @@
       this.hash_type_cmb.TabIndex = 0;
       this.hash_type_cmb.SelectedIndexChanged += new System.EventHandler(this.hash_type_cmb_SelectedIndexChanged);
       // 
+      // hash_groupbox
+      // 
+      this.hash_groupbox.Controls.Add(this.actual_hash_textbox);
+      this.hash_groupbox.Controls.Add(this.expect_hash_textbox);
+      this.hash_groupbox.Controls.Add(this.actual_label);
+      this.hash_groupbox.Controls.Add(this.expect_label);
+      this.hash_groupbox.Location = new System.Drawing.Point(12, 40);
+      this.hash_groupbox.Name = "hash_groupbox";
+      this.hash_groupbox.Size = new System.Drawing.Size(540, 84);
+      this.hash_groupbox.TabIndex = 8;
+      this.hash_groupbox.TabStop = false;
+      this.hash_groupbox.Text = "hash";
+      // 
+      // pref_groupbox
+      // 
+      this.pref_groupbox.Controls.Add(this.performance_textbox);
+      this.pref_groupbox.Location = new System.Drawing.Point(13, 131);
+      this.pref_groupbox.Name = "pref_groupbox";
+      this.pref_groupbox.Size = new System.Drawing.Size(539, 77);
+      this.pref_groupbox.TabIndex = 9;
+      this.pref_groupbox.TabStop = false;
+      this.pref_groupbox.Text = "performance";
+      // 
+      // performance_textbox
+      // 
+      this.performance_textbox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+      this.performance_textbox.Font = new System.Drawing.Font("新宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+      this.performance_textbox.Location = new System.Drawing.Point(7, 21);
+      this.performance_textbox.Multiline = true;
+      this.performance_textbox.Name = "performance_textbox";
+      this.performance_textbox.ReadOnly = true;
+      this.performance_textbox.Size = new System.Drawing.Size(526, 48);
+      this.performance_textbox.TabIndex = 0;
+      // 
       // calc_file_hash_form
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-      this.ClientSize = new System.Drawing.Size(564, 112);
+      this.ClientSize = new System.Drawing.Size(564, 220);
+      this.Controls.Add(this.pref_groupbox);
+      this.Controls.Add(this.hash_groupbox);
       this.Controls.Add(this.hash_type_cmb);
-      this.Controls.Add(this.expect_hash_textbox);
-      this.Controls.Add(this.actual_hash_textbox);
       this.Controls.Add(this.file_path_textbox);
-      this.Controls.Add(this.expect_label);
-      this.Controls.Add(this.actual_label);
       this.Controls.Add(this.browse_button);
       this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
       this.MaximizeBox = false;
@@ -129,6 +166,10 @@
       this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
       this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
       this.Text = "Calculate File Hash";
+      this.hash_groupbox.ResumeLayout(false);
+      this.hash_groupbox.PerformLayout();
+      this.pref_groupbox.ResumeLayout(false);
+      this.pref_groupbox.PerformLayout();
       this.ResumeLayout(false);
       this.PerformLayout();
 
@@ -143,6 +184,9 @@
     private System.Windows.Forms.TextBox actual_hash_textbox;
     private System.Windows.Forms.TextBox expect_hash_textbox;
     private System.Windows.Forms.ComboBox hash_type_cmb;
+    private System.Windows.Forms.GroupBox hash_groupbox;
+    private System.Windows.Forms.GroupBox pref_groupbox;
+    private System.Windows.Forms.TextBox performance_textbox;
   }
 }
 

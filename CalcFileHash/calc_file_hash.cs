@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
@@ -45,7 +46,16 @@ namespace CalcFileHash
 
     private void calc_hash()
     {
+      TimeSpan start = Process.GetCurrentProcess().TotalProcessorTime;
+      Stopwatch stw = new Stopwatch();
+      stw.Start();
+
       actual_hash_textbox.Text = calc_hash(file_path_textbox.Text, hash_type_cmb.Text);
+
+      stw.Stop();
+      double elaps = Process.GetCurrentProcess().TotalProcessorTime.Subtract(start).TotalMilliseconds;
+
+      calc_performance(file_path_textbox.Text, elaps, stw.Elapsed.TotalMilliseconds);
     }
 
     private string calc_hash(string file_path, string hash_type)
@@ -106,6 +116,44 @@ namespace CalcFileHash
 
       actual_hash_textbox.ForeColor = System.Drawing.Color.White;
       actual_hash_textbox.BackColor = System.Drawing.Color.OrangeRed;
+    }
+
+    private void calc_performance(string file_path, double cpu_time, double clock_time)
+    {
+      try {
+        FileInfo file_info = new FileInfo(file_path);
+        performance_textbox.Text = string.Format("  file size: {0}\r\n", format_file_size(file_info.Length));
+        performance_textbox.Text += string.Format("   cpu time: {0}\r\n", format_hash_time(cpu_time));
+        performance_textbox.Text += string.Format(" clock time: {0}\r\n", format_hash_time(clock_time));
+      } catch {
+        performance_textbox.Text = "";
+      }
+    }
+
+    private string format_file_size(long file_size)
+    {
+      int unit_index = 0;
+      double output_size = file_size;
+      while ((output_size / 1024) > 9) {
+        output_size /= 1024;
+        ++unit_index;
+      }
+
+      string[] unit = new string[] { "B", "KB", "MB", "GB", "TB" };
+      return string.Format("{0:N0} {1}", output_size, unit[unit_index]);
+    }
+
+    private string format_hash_time(double hash_time)
+    {
+      int unit_index = 0;
+      double output_time = hash_time;
+      if (output_time > 1000) {
+        ++unit_index;
+        output_time /= 1000;
+      }
+
+      string[] unit = new string[] { "ms", "s" };
+      return string.Format("{0:F2} {1}", output_time, unit[unit_index]);
     }
   }
 }
